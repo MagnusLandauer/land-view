@@ -7,7 +7,7 @@ const NavMenu = () => {
     <nav className="flex gap-4 items-center justify-between p-6 border-b border-black bg-slate-700">
       <ul className="flex gap-6 items-center">
         <li>
-          <Link className="nav-link" href="/">
+          <Link className="nav-link" href="/query">
             Compare!
           </Link>
         </li>
