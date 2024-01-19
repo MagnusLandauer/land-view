@@ -21,7 +21,15 @@ const LandForm = () => {
     },
   })
 
-  const [formValues, setFormValues] = useState(defaultFormVals)
+  const url_params = Object.fromEntries(
+    new URLSearchParams(window.location.search).entries()
+  )
+  const query_params = {
+    land1: url_params.land1 || defaultFormVals.land1,
+    land2: url_params.land2 || defaultFormVals.land2,
+  }
+
+  const [formValues, setFormValues] = useState(query_params)
 
   const handleChange = (e: FormEvent<HTMLSelectElement>) => {
     const { name, value } = e.currentTarget
@@ -30,7 +38,11 @@ const LandForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    mutate(formValues)
+    console.log(formValues)
+    const params = new URLSearchParams(
+      `land1=${formValues.land1}&land2=${formValues.land2}`
+    )
+    window.location.search = params.toString()
   }
 
   return (

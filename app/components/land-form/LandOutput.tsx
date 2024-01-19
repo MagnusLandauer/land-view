@@ -7,13 +7,22 @@ import { LandFormData } from "@/lib/entities"
 import Currency from "./Currency"
 
 const LandOutput = () => {
+  const url_params = new URLSearchParams(window.location.search)
+  const query_params = Object.fromEntries(url_params.entries())
+
+  console.log({ query_params })
   const {
     data: landData,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ["query"],
-    queryFn: () => APIService.getLandData({} as LandFormData),
+    queryFn: () =>
+      APIService.getLandData({
+        land1: query_params.land1,
+        land2: query_params.land2,
+      } as LandFormData),
   })
 
   if (!landData) {
@@ -24,6 +33,7 @@ const LandOutput = () => {
   }
 
   if (isError) {
+    console.log(error)
     return <div>Something went wrong</div>
   }
 
