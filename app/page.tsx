@@ -1,5 +1,11 @@
-import Button from "./components/Buttons.component"
+import LandForm from "./components/land-form/LandForm"
+import LandOutput from "./components/land-form/LandOutput"
 
 export default function Home() {
-  return <></>
+  return (
+    <>
+      <LandForm />
+      <LandOutput />
+    </>
+  )
 }
