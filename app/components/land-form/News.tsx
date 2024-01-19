@@ -22,7 +22,7 @@ const News = ({ land_name, land_code }: Props) => {
     return <div>Loading...</div>
   }
 
-  if (isError) {
+  if (isError || !newsData) {
     return <div>Something went wrong</div>
   }
 
