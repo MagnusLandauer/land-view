@@ -7,12 +7,17 @@ import { useMutation } from "@tanstack/react-query"
 import APIService from "@/lib/APIService"
 import { useQueryClient } from "@tanstack/react-query"
 
+interface Props {
+  query: LandFormData
+  setQuery: (query: LandFormData) => void
+}
+
 const defaultFormVals = {
   land1: "USA",
   land2: "NOR",
 } as LandFormData
 
-const LandForm = () => {
+const LandForm = ({ query, setQuery }: Props) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
     mutationFn: (formData: LandFormData) => APIService.getLandData(formData),
@@ -21,12 +26,9 @@ const LandForm = () => {
     },
   })
 
-  const url_params = Object.fromEntries(
-    new URLSearchParams(window.location.search).entries()
-  )
   const query_params = {
-    land1: url_params.land1 || defaultFormVals.land1,
-    land2: url_params.land2 || defaultFormVals.land2,
+    land1: query.land1 || defaultFormVals.land1,
+    land2: query.land2 || defaultFormVals.land2,
   }
 
   const [formValues, setFormValues] = useState(query_params)
@@ -38,11 +40,8 @@ const LandForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(formValues)
-    const params = new URLSearchParams(
-      `land1=${formValues.land1}&land2=${formValues.land2}`
-    )
-    window.location.search = params.toString()
+    setQuery(formValues)
+    mutate(formValues)
   }
 
   return (
