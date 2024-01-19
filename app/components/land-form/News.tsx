@@ -29,7 +29,7 @@ const News = ({ land_name, land_code }: Props) => {
   return (
     <div>
       <p>Popular news from {land_name}</p>
-      {newsData?.articles.map((article) => {
+      {newsData?.articles?.map((article) => {
         return (
           <div key={article.title}>
             <a className="text-blue-500" href={article.url}>
