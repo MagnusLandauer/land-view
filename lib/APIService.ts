@@ -57,7 +57,7 @@ export class APIService {
     if (!location_coord) throw new Error("Invalid location coordinates")
     try {
       const weather_res = await fetch(
-        `http://api.weatherstack.com/current?access_key=${
+        `https://api.weatherstack.com/current?access_key=${
           process.env.NEXT_PUBLIC_WEATHER_API_KEY ?? ""
         }&query=${location_coord}&units=m`,
         {
