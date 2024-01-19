@@ -10,7 +10,6 @@ const LandOutput = () => {
   const url_params = new URLSearchParams(window.location.search)
   const query_params = Object.fromEntries(url_params.entries())
 
-  console.log({ query_params })
   const {
     data: landData,
     isLoading,
