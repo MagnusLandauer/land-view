@@ -1,0 +1,47 @@
+{
+  "NewsAPI": {
+    "status": "ok",
+    "totalResults": 3,
+    "articles": [
+      {
+        "source": {
+          "id": "google-news",
+          "name": "Google News"
+        },
+        "author": "Liverpool.no",
+        "title": "Det egyptiske fotballforbundet bekrefter Salah-skade - Liverpool.no",
+        "description": null,
+        "url": "https://news.google.com/rss/articles/CBMiS2h0dHBzOi8vd3d3LmxpdmVycG9vbC5uby9ueWhldGVyLzIwMjQvMS9iZWtyZWZ0ZXItaGFtc3RyaW5nc2thZGUtcGFhLXNhbGFoL9IBAA?oc=5",
+        "urlToImage": null,
+        "publishedAt": "2024-01-19T21:33:00Z",
+        "content": null
+      },
+      {
+        "source": {
+          "id": "google-news",
+          "name": "Google News"
+        },
+        "author": "VG",
+        "title": "Advarer: – Hold deg unna veiene - VG",
+        "description": null,
+        "url": "https://news.google.com/rss/articles/CBMiSWh0dHBzOi8vd3d3LnZnLm5vL255aGV0ZXIvaW5uZW5yaWtzL2kvMFFtOWEyL2FkdmFyZXItaG9sZC1kZWctdW5uYS12ZWllbmXSAQA?oc=5",
+        "urlToImage": null,
+        "publishedAt": "2024-01-19T20:53:32Z",
+        "content": null
+      },
+      {
+        "source": {
+          "id": "google-news",
+          "name": "Google News"
+        },
+        "author": "VG",
+        "title": "«Emily in Paris»-skuespiller Ashley Park innlagt på sykehus med blodforgiftning - VG",
+        "description": null,
+        "url": "https://news.google.com/rss/articles/CBMicmh0dHBzOi8vd3d3LnZnLm5vL3JhbXBlbHlzL2kvZHdYTGtBL2VtaWx5LWluLXBhcmlzLXNrdWVzcGlsbGVyLWFzaGxleS1wYXJrLWlubmxhZ3QtcGFhLXN5a2VodXMtbWVkLWJsb2Rmb3JnaWZ0bmluZ9IBAA?oc=5",
+        "urlToImage": null,
+        "publishedAt": "2024-01-19T20:35:24Z",
+        "content": null
+      }
+    ]
+  }
+}

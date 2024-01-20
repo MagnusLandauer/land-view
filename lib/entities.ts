@@ -104,17 +104,17 @@ export interface WeatherData {
 }
 
 type Article = {
-  author: string
-  content: string
-  description: string
-  publishedAt: string
+  author: string | null
+  content: string | null
+  description: string | null
+  publishedAt: string | null
   source: {
-    id: string
-    name: string
+    id: string | null
+    name: string | null
   }
   title: string
   url: string
-  urlToImage: string
+  urlToImage: string | null
 }
 
 export interface NewsData {
