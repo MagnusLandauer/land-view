@@ -1,11 +1,15 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Miriam_Libre } from "next/font/google"
 import "./globals.css"
 import NavMenu from "./NavMenu"
-import AuthProvider from "./AuthProvider"
-import ReactQueryClientProvider from "./ReactQueryClientProvider"
+import Providers from "./Providers"
 
-const inter = Inter({ subsets: ["latin"] })
+const MiriamLibre = Miriam_Libre({
+  weight: ["400", "700"],
+  style: ["normal"],
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Land View",
@@ -18,15 +22,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body className={`bg-slate-200 ${inter.className}`}>
-          <ReactQueryClientProvider>
-            <NavMenu />
-            {children}
-          </ReactQueryClientProvider>
-        </body>
-      </html>
-    </AuthProvider>
+    <html lang="en">
+      <body
+        className={`dark text-foreground bg-background min-h-screen ${MiriamLibre.className}`}
+      >
+        <Providers>
+          <NavMenu />
+          <div className="p-8">{children}</div>
+        </Providers>
+      </body>
+    </html>
   )
 }

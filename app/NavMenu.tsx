@@ -1,25 +1,40 @@
 import Link from "next/link"
-import { FaHeart } from "react-icons/fa"
-import { SignInButton } from "./components/Buttons.component"
+import { FaHeart, FaSearch } from "react-icons/fa"
+import AuthButton from "./components/AuthButton"
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+} from "@nextui-org/react"
+import Logo from "./components/Logo"
 
 const NavMenu = () => {
   return (
-    <nav className="flex gap-4 items-center justify-between p-6 border-b border-black bg-slate-700">
-      <ul className="flex gap-6 items-center">
-        <li>
+    <Navbar maxWidth="2xl" isBordered>
+      <NavbarBrand>
+        <Link href="/">
+          <Logo size={36} />
+        </Link>
+      </NavbarBrand>
+      <NavbarContent justify="center">
+        <NavbarItem>
           <Link className="nav-link" href="/query">
-            Compare!
+            <FaSearch />
           </Link>
-        </li>
-        <li>
-          <Link className="nav-link flex gap-2 items-center" href="/Favorite">
-            Favorite <FaHeart />
+        </NavbarItem>
+        <NavbarItem>
+          <Link className="nav-link" href="/Favorite">
+            <FaHeart />
           </Link>
-        </li>
-      </ul>
-      {/* AUTH_CONTROLS */}
-      <SignInButton />
-    </nav>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <AuthButton />
+        </NavbarItem>
+      </NavbarContent>
+    </Navbar>
   )
 }
 

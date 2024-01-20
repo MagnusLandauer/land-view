@@ -1,83 +1,77 @@
 "use client"
 
 import { LandFormData, Lands } from "@/lib/entities"
-import { FormEvent, useState } from "react"
-import Button from "../Buttons.component"
-import { useMutation } from "@tanstack/react-query"
-import APIService from "@/lib/APIService"
-import { useQueryClient } from "@tanstack/react-query"
-
-interface Props {
-  query: LandFormData
-  setQuery: (query: LandFormData) => void
-}
+import { ChangeEventHandler, FormEvent, useState } from "react"
+import { useRouter } from "next/navigation"
+import { Select, SelectItem, Button } from "@nextui-org/react"
+import { FaPlay } from "react-icons/fa"
+import { IoSwapHorizontal } from "react-icons/io5"
 
 const defaultFormVals = {
-  land1: "USA",
-  land2: "NOR",
+  land1: "",
+  land2: "",
 } as LandFormData
 
-const LandForm = ({ query, setQuery }: Props) => {
-  const queryClient = useQueryClient()
-  const { mutate } = useMutation({
-    mutationFn: (formData: LandFormData) => APIService.getLandData(formData),
-    onSuccess: (data) => {
-      queryClient.setQueryData(["query"], data)
-    },
-  })
+const LandForm = () => {
+  const { push } = useRouter()
+  const [formValues, setFormValues] = useState<LandFormData>(defaultFormVals)
+  const [showValidation, setShowValidation] = useState(false)
 
-  const query_params = {
-    land1: query.land1 || defaultFormVals.land1,
-    land2: query.land2 || defaultFormVals.land2,
-  }
-
-  const [formValues, setFormValues] = useState(query_params)
-
-  const handleChange = (e: FormEvent<HTMLSelectElement>) => {
-    const { name, value } = e.currentTarget
+  const handleChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const { value, name } = e.target
     setFormValues((prev) => ({ ...prev, [name]: value }))
+    setShowValidation(false)
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setQuery(formValues)
-    mutate(formValues)
+    if (!formValues.land1 || !formValues.land2) {
+      setShowValidation(true)
+      return
+    }
+    const shortQuery = `${formValues.land1}-${formValues.land2}`
+    push(`/query/${shortQuery}`)
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="land1">Land 1</label>
-      <select
-        name="land1"
-        id="land1"
-        value={formValues.land1}
-        onChange={handleChange}
-      >
-        {Object.entries(Lands).map(([code, name], i) => {
-          return (
-            <option key={`land1-${1}-${code}`} value={code}>
-              {name}
-            </option>
-          )
-        })}
-      </select>
+      <div className="flex flex-col gap-6 md:flex-row items-center max-w-sm mx-auto md:max-w-xl">
+        {showValidation && (
+          <div className="text-red-500">Please select two countries</div>
+        )}
+        <Select
+          label="Select a country"
+          size="md"
+          variant="bordered"
+          name="land1"
+          selectedKeys={[formValues.land1]}
+          onChange={handleChange}
+        >
+          {Object.entries(Lands).map(([code, name]) => {
+            return <SelectItem key={code}>{name}</SelectItem>
+          })}
+        </Select>
 
-      <label htmlFor="land2">Land 2</label>
-      <select
-        name="land2"
-        id="land2"
-        value={formValues.land2}
-        onChange={handleChange}
-      >
-        {Object.entries(Lands).map(([code, name]) => {
-          return (
-            <option key={`land2-${1}-${code}`} value={code}>
-              {name}
-            </option>
-          )
-        })}
-      </select>
-      <Button type="submit">Go!</Button>
+        <IoSwapHorizontal className="w-6 h-6 md:w-10 md:h-10" />
+
+        <Select
+          label="Select a country"
+          size="md"
+          variant="bordered"
+          name="land2"
+          selectedKeys={[formValues.land2]}
+          onChange={handleChange}
+        >
+          {Object.entries(Lands).map(([code, name]) => {
+            return <SelectItem key={code}>{name}</SelectItem>
+          })}
+        </Select>
+      </div>
+      <div className="flex justify-center mt-8">
+        <Button type="submit" color="primary" size="lg" className="px-10 y-6">
+          <FaPlay />
+        </Button>
+      </div>
     </form>
   )
 }
