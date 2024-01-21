@@ -1,8 +1,8 @@
 import React from "react"
-import Times from "./Times"
+import Times from "../../components/land-output/Times"
 import { CountryData } from "@/lib/entities"
-import Weather from "./Weather"
-import News from "./News"
+import Weather from "../../components/land-output/Weather"
+import News from "../../components/land-output/News"
 import { Card, Divider, Skeleton } from "@nextui-org/react"
 import Image from "next/image"
 

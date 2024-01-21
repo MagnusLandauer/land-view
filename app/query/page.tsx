@@ -1,6 +1,6 @@
 "use client"
-import Brand from "../components/land-form/Brand"
-import LandForm from "../components/land-form/LandForm"
+import Brand from "../components/land-output/Brand"
+import LandForm from "./LandForm"
 
 export default function Query() {
   return (
