@@ -1,58 +1,21 @@
-"use client"
-import { useQuery } from "@tanstack/react-query"
 import React from "react"
-import DataColumn from "./DataColumn"
-import APIService from "@/lib/APIService"
-import { LandFormData } from "@/lib/entities"
-import Currency from "../../components/land-output/Currency"
-import { Spinner } from "@nextui-org/react"
-import LoadingPageSpinner from "@/app/components/LoadingPageSpinner"
-import ErrorContent from "@/app/components/ErrorContent"
+import Actions from "./Actions"
+import Output from "./Output"
+import { getServerSession } from "next-auth"
+import authOptions from "@/lib/authOptions"
 
 interface Props {
   params: { query_params: string }
 }
 
-const LandOutput = ({ params }: Props) => {
-  const query_params = params.query_params.split("-")
-  const query: LandFormData = {
-    land1: query_params[0],
-    land2: query_params[1],
-  }
-  const {
-    data: landData,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["query"],
-    queryFn: () => APIService.getLandData(query as LandFormData),
-  })
-
-  if (isLoading) return <LoadingPageSpinner />
-
-  if (isError) throw new Error(error.message)
-
-  if (!landData) {
-    return (
-      <div className="py-12 mx-auto">No land data. Start a new search!</div>
-    )
-  }
-
-  const { land1, land2 } = landData
-  const base_currency = Object.keys(land1.currencies)[0]
-  const target_currency = Object.keys(land2.currencies)[0]
+const LandOutput = async ({ params }: Props) => {
+  const { query_params } = params
+  const session = await getServerSession(authOptions)
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="grid grid-cols-1 gap-16 md:gap-8 md:grid-cols-2">
-        <DataColumn land={landData.land1} isLoading={isLoading} />
-        <DataColumn land={landData.land2} isLoading={isLoading} />
-      </div>
-      <Currency
-        base_currency={base_currency}
-        target_currency={target_currency}
-      />
+      {session && <Actions queryString={query_params} />}
+      <Output queryString={query_params} />
     </div>
   )
 }

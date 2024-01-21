@@ -18,6 +18,22 @@ export enum Lands {
   VEN = "Venezuela",
 }
 
+export interface User {
+  id: string
+  email: string
+  name: string
+  image: string
+  createdAt: Date
+  updatedAt: Date
+  comparisons: Comparison[]
+}
+
+export interface Comparison {
+  id: string
+  locations: string
+  userId: string
+}
+
 export interface LandFormData {
   land1: string
   land2: string

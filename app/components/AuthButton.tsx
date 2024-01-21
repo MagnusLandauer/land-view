@@ -41,7 +41,7 @@ const SignInButton = () => {
     )
   }
   return (
-    <Button onClick={() => signIn()} color="primary">
+    <Button onClick={() => signIn()} color="primary" variant="ghost">
       Sign in
     </Button>
   )

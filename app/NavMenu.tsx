@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FaHeart, FaSearch } from "react-icons/fa"
+import { FaList, FaSearch } from "react-icons/fa"
 import AuthButton from "./components/AuthButton"
 import {
   Navbar,
@@ -24,8 +24,8 @@ const NavMenu = () => {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="nav-link" href="/Favorite">
-            <FaHeart />
+          <Link className="nav-link" href="/saved">
+            <FaList />
           </Link>
         </NavbarItem>
       </NavbarContent>

@@ -21,7 +21,7 @@ const Currency = ({ base_currency, target_currency }: Props) => {
   })
 
   return (
-    <Card className="col-span-2 mt-8 p-3">
+    <Card className="p-3">
       <CardHeader className="text-xl flex gap-2">
         Exchange rate <FaMoneyBillTransfer className="text-secondary" />
       </CardHeader>

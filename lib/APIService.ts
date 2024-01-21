@@ -4,6 +4,8 @@ import {
   NewsData,
   WeatherData,
   CurrencyExchangeData,
+  User,
+  Comparison,
 } from "./entities"
 
 import MockData from "./MockData.json"
@@ -115,6 +117,54 @@ export class APIService {
       console.error(error)
     }
     return {} as CurrencyExchangeData
+  }
+
+  addSavedQuery = async (queryString: string): Promise<Comparison> => {
+    if (!queryString) throw new Error("Invalid query string")
+    try {
+      const res = await fetch("/api/save-query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ queryString }),
+      })
+      return res.json()
+    } catch (error) {
+      console.error(error)
+    }
+    return {} as Comparison
+  }
+
+  deleteSavedQuery = async (id: string): Promise<void> => {
+    if (!id) throw new Error("Cannot delete comparison where id is undefined")
+    try {
+      const res = await fetch("/api/save-query", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      })
+      return res.json()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  getUser = async (): Promise<User> => {
+    try {
+      const res = await fetch("/api/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      return res.json()
+    } catch (error) {
+      console.error(error)
+    }
+    return {} as User
   }
 }
 

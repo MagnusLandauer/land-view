@@ -59,8 +59,7 @@ model VerificationToken {
 
 model SavedComparison {
   id            String     @default(cuid()) @id
-  locations     String[]
-  favorite      Boolean    @default(false)
+  locations     String
   userId        String
   user          User       @relation(fields: [userId], references: [id])
 }
