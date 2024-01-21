@@ -1,20 +1,25 @@
 "use client"
-import React from "react"
-import AuthProvider from "./AuthProvider"
 import { NextUIProvider } from "@nextui-org/react"
-import ReactQueryClientProvider from "./ReactQueryClientProvider"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { SessionProvider } from "next-auth/react"
 
 interface ProvidersProps {
   children: React.ReactNode
 }
 
+const queryClient = new QueryClient()
+
 const Providers = ({ children }: ProvidersProps) => {
   return (
-    <AuthProvider>
+    <SessionProvider>
       <NextUIProvider>
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </NextUIProvider>
-    </AuthProvider>
+    </SessionProvider>
   )
 }
 

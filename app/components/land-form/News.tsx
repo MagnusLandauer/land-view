@@ -19,10 +19,12 @@ const News = ({ land_name, land_code }: Props) => {
     queryFn: () => APIService.getTopNews(land_code),
   })
 
+  const title = `Popular news from ${land_name}`
+
   if (isLoading) {
     return (
       <div className="space-y-3">
-        <h3 className="text-xl mb-6">Popular news from {land_name}</h3>
+        <h3 className="text-xl mb-6">{title}</h3>
         <Skeleton className="w-3/5 rounded-lg">
           <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
         </Skeleton>
@@ -37,12 +39,12 @@ const News = ({ land_name, land_code }: Props) => {
   }
 
   if (isError || !newsData) {
-    return <div>Something went wrong</div>
+    return <div>Apologies. Could not fetch news.</div>
   }
 
   return (
     <div>
-      <h3 className="text-xl mb-6">Popular news from {land_name}</h3>
+      <h3 className="text-xl mb-6">{title}</h3>
       {newsData?.totalResults === 0 && <div>No news found</div>}
       <div className="flex flex-col gap-3">
         {newsData?.articles?.map((article) => {

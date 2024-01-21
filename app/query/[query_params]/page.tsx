@@ -6,6 +6,8 @@ import APIService from "@/lib/APIService"
 import { LandFormData } from "@/lib/entities"
 import Currency from "../../components/land-form/Currency"
 import { Spinner } from "@nextui-org/react"
+import LoadingPageSpinner from "@/app/components/LoadingPageSpinner"
+import ErrorContent from "@/app/components/ErrorContent"
 
 interface Props {
   params: { query_params: string }
@@ -27,18 +29,9 @@ const LandOutput = ({ params }: Props) => {
     queryFn: () => APIService.getLandData(query as LandFormData),
   })
 
-  if (isLoading) {
-    return (
-      <div className="mx-auto my-52 text-center">
-        <Spinner color="secondary" size="lg" />
-      </div>
-    )
-  }
+  if (isLoading) return <LoadingPageSpinner />
 
-  if (isError) {
-    console.log(error)
-    return <div>Something went wrong</div>
-  }
+  if (isError) throw new Error(error.message)
 
   if (!landData) {
     return (
