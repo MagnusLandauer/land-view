@@ -28,6 +28,12 @@ const config: Config = {
             secondary: "#76b39d",
           },
         },
+        light: {
+          colors: {
+            primary: "#589e85",
+            secondary: "#76b39d",
+          },
+        },
       },
     }),
   ],

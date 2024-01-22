@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { Miriam_Libre } from "next/font/google"
-import "./globals.css"
+import "./globals.scss"
 import NavMenu from "./NavMenu"
 import Providers from "./Providers"
 
@@ -22,9 +22,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`dark text-foreground bg-background min-h-screen ${MiriamLibre.className}`}
+        className={`text-foreground bg-background min-h-screen ${MiriamLibre.className}`}
       >
         <Providers>
           <NavMenu />

@@ -1,6 +1,6 @@
 import APIService from "@/lib/APIService"
 import { CountryData } from "@/lib/entities"
-import { Skeleton } from "@nextui-org/react"
+import { Chip, Skeleton } from "@nextui-org/react"
 import { useQuery } from "@tanstack/react-query"
 import React from "react"
 
@@ -47,13 +47,22 @@ const News = ({ land_name, land_code }: Props) => {
       <h3 className="text-xl mb-6">{title}</h3>
       {newsData?.data.length === 0 ||
         (newsData.meta.returned === 0 && <div>No news found</div>)}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         {newsData?.data?.map((article) => {
           return (
-            <div key={article.title}>
-              <a className="text-blue-500" href={article.url}>
+            <div key={article.uuid}>
+              <a className="text-secondary" href={article.url}>
                 {article.title}
               </a>
+              <div className="flex gap-2 mt-2">
+                {article.categories?.map((category) => {
+                  return (
+                    <Chip variant="bordered" color="default">
+                      {category}
+                    </Chip>
+                  )
+                })}
+              </div>
             </div>
           )
         })}

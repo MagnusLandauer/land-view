@@ -8,6 +8,7 @@ import {
   NavbarItem,
 } from "@nextui-org/react"
 import Logo from "./components/Logo"
+import ThemeSwitcher from "./components/ThemeSwitcher"
 
 const NavMenu = () => {
   return (
@@ -30,6 +31,9 @@ const NavMenu = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
+        <NavbarItem>
+          <ThemeSwitcher />
+        </NavbarItem>
         <NavbarItem>
           <AuthButton />
         </NavbarItem>

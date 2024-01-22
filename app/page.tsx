@@ -1,7 +1,7 @@
 "use client"
-import { Button } from "@nextui-org/react"
+import { Button, Link } from "@nextui-org/react"
 import Brand from "./components/land-output/Brand"
-import { MdStart } from "react-icons/md"
+import { MdOutlineAttribution, MdStart } from "react-icons/md"
 import { useRouter } from "next/navigation"
 
 export default function Home() {
@@ -18,6 +18,18 @@ export default function Home() {
         >
           START
         </Button>
+        <div className="mt-16">
+          <p>
+            A country information viewer and comparison tool made by{" "}
+            <Link href="https://github.com/MagnusLandauer" isExternal>
+              Magnus Landauer
+            </Link>
+          </p>
+          <Link href="/attributions" className="mt-8">
+            Attributions
+            <MdOutlineAttribution className="ml-2" />
+          </Link>
+        </div>
       </div>
     </>
   )

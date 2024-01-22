@@ -45,6 +45,7 @@ const LandForm = () => {
           variant="bordered"
           name="land1"
           selectedKeys={[formValues.land1]}
+          disabledKeys={[formValues.land2]}
           onChange={handleChange}
         >
           {Object.entries(Lands).map(([code, name]) => {
@@ -60,6 +61,7 @@ const LandForm = () => {
           variant="bordered"
           name="land2"
           selectedKeys={[formValues.land2]}
+          disabledKeys={[formValues.land1]}
           onChange={handleChange}
         >
           {Object.entries(Lands).map(([code, name]) => {
@@ -68,7 +70,12 @@ const LandForm = () => {
         </Select>
       </div>
       <div className="flex justify-center mt-8">
-        <Button type="submit" color="primary" size="lg" className="px-10 y-6">
+        <Button
+          type="submit"
+          color="primary"
+          size="lg"
+          className="px-10 y-6 text-white"
+        >
           <FaPlay />
         </Button>
       </div>
