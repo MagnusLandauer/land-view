@@ -120,23 +120,24 @@ export interface WeatherData {
 }
 
 type Article = {
-  author: string | null
-  content: string | null
-  description: string | null
-  publishedAt: string | null
-  source: {
-    id: string | null
-    name: string | null
-  }
+  [key: string]: unknown
+  uuid: string
   title: string
+  description: string
   url: string
-  urlToImage: string | null
+  source: string
+  categories: string[]
 }
 
 export interface NewsData {
-  articles: Article[]
-  status: string
-  totalResults: number
+  data: Article[]
+  meta: {
+    found: number
+    limit: number
+    page: number
+    returned: number
+  }
+  warnings: string[]
 }
 
 export interface CurrencyExchangeData {

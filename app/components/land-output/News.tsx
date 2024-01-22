@@ -15,11 +15,11 @@ const News = ({ land_name, land_code }: Props) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["news", land_code],
-    queryFn: () => APIService.getTopNews(land_code),
+    queryKey: ["news", land_name],
+    queryFn: () => APIService.getTopNews(land_name),
   })
 
-  const title = `Popular news from ${land_name}`
+  const title = `News about ${land_name}`
 
   if (isLoading) {
     return (
@@ -45,9 +45,10 @@ const News = ({ land_name, land_code }: Props) => {
   return (
     <div>
       <h3 className="text-xl mb-6">{title}</h3>
-      {newsData?.totalResults === 0 && <div>No news found</div>}
+      {newsData?.data.length === 0 ||
+        (newsData.meta.returned === 0 && <div>No news found</div>)}
       <div className="flex flex-col gap-3">
-        {newsData?.articles?.map((article) => {
+        {newsData?.data?.map((article) => {
           return (
             <div key={article.title}>
               <a className="text-blue-500" href={article.url}>
