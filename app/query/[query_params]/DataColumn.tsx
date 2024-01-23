@@ -65,7 +65,7 @@ const DataColumn = ({ land, isLoading }: Props) => {
         )}
       </Card>
 
-      <Card className="p-6 flex-col gap-8">
+      <Card className="p-6 flex-col gap-8 grow">
         <Times coordinates={land_coords} city_name={land.capital[0]} />
         <Divider />
         <Weather coordinates={land_coords} />
