@@ -1,4 +1,4 @@
-import React from "react"
+import { useState } from "react"
 import Times from "../../components/land-output/Times"
 import { CountryData } from "@/lib/entities"
 import Weather from "../../components/land-output/Weather"
@@ -14,6 +14,8 @@ interface Props {
 const DataColumn = ({ land, isLoading }: Props) => {
   const land_name = land.name.common
   const land_coords = land.capitalInfo.latlng
+  const [loadingImg, setLoadingImg] = useState(true)
+
   return (
     <div className="flex flex-col gap-8">
       <Card>
@@ -31,13 +33,22 @@ const DataColumn = ({ land, isLoading }: Props) => {
         )}
         {land && (
           <div className="flex items-center gap-6 p-4">
-            <div className="w-16 h-16 relative">
-              <Image
+            <div
+              className={`w-16 h-16 relative ${
+                loadingImg ? "hidden" : "block"
+              }`}
+            >
+              <img
+                className="max-w-full max-h-full overflow-hidden mx-auto"
                 src={land.coatOfArms.svg}
                 alt={`${land_name} coat of arms`}
-                objectFit="contain"
-                fill
+                onLoad={() => setLoadingImg(false)}
               />
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Skeleton className="w-16 h-16 rounded-lg bg-default-300" />
+                </div>
+              )}
             </div>
             <div>
               <h2 className="text-2xl">
