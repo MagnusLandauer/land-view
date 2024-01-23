@@ -83,7 +83,7 @@ export class APIService {
       const base_url = "https://api.thenewsapi.com/v1/news/top"
       const api_key = process.env.NEXT_PUBLIC_NEWS_API_KEY ?? ""
       const news_res = await fetch(
-        `${base_url}?api_token=${api_key}&search=${landStr}&limit=3&search_fields=keywords`,
+        `${base_url}?api_token=${api_key}&search=${landStr}&limit=3&search_fields=keywords&sort=published_at`,
         {
           method: "GET",
         }

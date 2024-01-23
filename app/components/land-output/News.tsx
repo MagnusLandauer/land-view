@@ -1,6 +1,6 @@
 import APIService from "@/lib/APIService"
 import { CountryData } from "@/lib/entities"
-import { Chip, Skeleton } from "@nextui-org/react"
+import { Chip, Link, Skeleton } from "@nextui-org/react"
 import { useQuery } from "@tanstack/react-query"
 import React from "react"
 
@@ -51,9 +51,9 @@ const News = ({ land_name, land_code }: Props) => {
         {newsData?.data?.map((article) => {
           return (
             <div key={article.uuid}>
-              <a className="text-secondary" href={article.url}>
+              <Link className="text-secondary" href={article.url} isExternal>
                 {article.title}
-              </a>
+              </Link>
               <div className="flex gap-2 mt-2">
                 {article.categories?.map((category) => {
                   return (
