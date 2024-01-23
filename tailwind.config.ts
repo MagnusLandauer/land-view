@@ -26,12 +26,14 @@ const config: Config = {
           colors: {
             primary: "#589e85",
             secondary: "#76b39d",
+            background: "#111111",
           },
         },
         light: {
           colors: {
             primary: "#589e85",
             secondary: "#76b39d",
+            background: "#efefef",
           },
         },
       },
