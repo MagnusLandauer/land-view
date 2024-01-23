@@ -77,8 +77,6 @@ export class APIService {
 
   getTopNews = async (landStr: string): Promise<NewsData> => {
     if (!landStr) throw new Error("Cannot fetch News. Invalid country code")
-    // if (process.env.NODE_ENV === "development")
-    //   return MockData.NewsAPI as NewsData // Mock data to reduce API calls
     try {
       const base_url = "https://api.thenewsapi.com/v1/news/top"
       const api_key = process.env.NEXT_PUBLIC_NEWS_API_KEY ?? ""
