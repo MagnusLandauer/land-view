@@ -42,6 +42,7 @@ const LandForm = () => {
         <Select
           label="Select a country"
           size="md"
+          data-testid="land1"
           variant="bordered"
           name="land1"
           selectedKeys={[formValues.land1]}
@@ -58,6 +59,7 @@ const LandForm = () => {
         <Select
           label="Select a country"
           size="md"
+          data-testid="land2"
           variant="bordered"
           name="land2"
           selectedKeys={[formValues.land2]}
