@@ -57,13 +57,20 @@ export class APIService {
     return {} as CountryData
   }
 
-  getLandWeather = async (query: string): Promise<WeatherData> => {
+  getLandWeather = async ({
+    query,
+    options,
+  }: {
+    query: string
+    options?: { temp_unit: string }
+  }): Promise<WeatherData> => {
     if (!query) throw new Error("Invalid weather query")
+    const temp_unit = options?.temp_unit === "F" ? "f" : "m"
     try {
       const weather_res = await fetch(
         `https://api.weatherstack.com/current?access_key=${
           process.env.NEXT_PUBLIC_WEATHER_API_KEY ?? ""
-        }&query=${query}&units=m`,
+        }&query=${query}&units=${temp_unit}`,
         {
           method: "GET",
         }

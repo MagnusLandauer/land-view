@@ -1,10 +1,11 @@
 "use-client"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Times from "./Times"
 import { Autocomplete, AutocompleteItem, Divider } from "@nextui-org/react"
 import Weather from "./Weather"
 import { useQuery } from "@tanstack/react-query"
 import APIService from "@/lib/APIService"
+import { SettingsContext } from "@/app/Providers"
 
 interface FormValues {
   city: string
@@ -22,26 +23,21 @@ interface CityDataProps {
 const CityData = ({ capital, countryName }: CityDataProps) => {
   const [selectedCity, setSelectedCity] = useState<string>("")
   const [selectedState, setSelectedState] = useState<string>("")
-
   const [displayCity, setDisplayCity] = useState<FormValues["city"]>(capital)
 
-  const {
-    data: states,
-    // isLoading,
-    // isError,
-    // error,
-  } = useQuery({
+  const settingsContext = useContext(SettingsContext)
+  if (settingsContext === undefined) {
+    throw new Error("useSettings must be used within a SettingsProvider")
+  }
+  const { settings, setSettings } = settingsContext
+
+  const { data: states } = useQuery({
     queryKey: ["states", countryName],
     queryFn: () => APIService.getStatesByCountry(countryName),
     enabled: !!countryName,
   })
 
-  const {
-    data: cities,
-    // isLoading,
-    // isError,
-    // error,
-  } = useQuery({
+  const { data: cities } = useQuery({
     queryKey: ["city_data", selectedState],
     queryFn: () => APIService.getCitiesByState(countryName, selectedState),
     enabled: !!selectedState && !!countryName,
@@ -52,8 +48,16 @@ const CityData = ({ capital, countryName }: CityDataProps) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["weather", displayCity],
-    queryFn: () => APIService.getLandWeather(displayCity),
+    queryKey: [
+      "weather",
+      `${displayCity.replace(/[.,]/g, "")}, ${countryName}`,
+      settings.temp_unit,
+    ],
+    queryFn: () =>
+      APIService.getLandWeather({
+        query: `${displayCity.replace(/[.,]/g, "")}, ${countryName}`,
+        options: { temp_unit: settings.temp_unit },
+      }),
     enabled: !!displayCity,
   })
 
@@ -103,6 +107,7 @@ const CityData = ({ capital, countryName }: CityDataProps) => {
         weatherData={weatherData}
         isLoading={isLoading}
         isError={isError}
+        tempUnit={settings.temp_unit}
       />
     </>
   )

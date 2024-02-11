@@ -8,9 +8,15 @@ interface WeatherProps {
   weatherData: WeatherData | undefined
   isLoading: boolean
   isError: boolean
+  tempUnit: "C" | "F"
 }
 
-const Weather = ({ weatherData, isError, isLoading }: WeatherProps) => {
+const Weather = ({
+  weatherData,
+  isError,
+  isLoading,
+  tempUnit,
+}: WeatherProps) => {
   if (isLoading) {
     return (
       <>
@@ -52,7 +58,13 @@ const Weather = ({ weatherData, isError, isLoading }: WeatherProps) => {
           <p>{weather_descriptions[0]}</p>
           <Chip
             startContent={<FaTemperatureEmpty />}
-            endContent={<TbTemperatureCelsius />}
+            endContent={
+              tempUnit === "C" ? (
+                <TbTemperatureCelsius />
+              ) : (
+                <TbTemperatureFahrenheit />
+              )
+            }
             variant="faded"
             color="secondary"
             radius="sm"
@@ -63,7 +75,9 @@ const Weather = ({ weatherData, isError, isLoading }: WeatherProps) => {
         </div>
         S
       </div>
-      <p className="mt-4">Feels like {feelslike}°c</p>
+      <p className="mt-4">
+        Feels like {feelslike}°{tempUnit.toLocaleLowerCase()}
+      </p>
     </div>
   )
 }

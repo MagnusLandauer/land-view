@@ -1,9 +1,8 @@
 "use client"
-import { Button, Skeleton, Spinner, Switch, Tooltip } from "@nextui-org/react"
+import { Button, Skeleton, Spinner, Tooltip } from "@nextui-org/react"
 import React, { useCallback, useEffect, useState } from "react"
 import APIService from "@/lib/APIService"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { TbTemperatureCelsius, TbTemperatureFahrenheit } from "react-icons/tb"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 const Actions = ({
   isLoggedIn,
@@ -13,8 +12,6 @@ const Actions = ({
   queryString: string
 }) => {
   const [showError, setShowError] = useState(false)
-  const queryClient = useQueryClient()
-  const hasLandData = queryClient.getQueryData(["query"]) !== undefined
 
   const {
     data: user,
@@ -60,12 +57,12 @@ const Actions = ({
   }, [queryString])
 
   return (
-    <div className="flex gap-4 mb-8">
-      {isLoggedIn && isLoading ? (
+    <>
+      {isLoading ? (
         <div className="h-4 flex mb-8">
           <Skeleton className="w-1/5 rounded-lg" />
         </div>
-      ) : isLoggedIn && user ? (
+      ) : user ? (
         <Tooltip
           isOpen={showError}
           placement="bottom-start"
@@ -88,24 +85,7 @@ const Actions = ({
           </Button>
         </Tooltip>
       ) : null}
-
-      {hasLandData && false && (
-        <Switch
-          defaultSelected
-          size="lg"
-          color="primary"
-          thumbIcon={({ isSelected, className }) =>
-            isSelected ? (
-              <TbTemperatureCelsius className={className} />
-            ) : (
-              <TbTemperatureFahrenheit className={className} />
-            )
-          }
-        >
-          Tempurature unit
-        </Switch>
-      )}
-    </div>
+    </>
   )
 }
 
