@@ -57,13 +57,13 @@ export class APIService {
     return {} as CountryData
   }
 
-  getLandWeather = async (location_coord: string): Promise<WeatherData> => {
-    if (!location_coord) throw new Error("Invalid location coordinates")
+  getLandWeather = async (query: string): Promise<WeatherData> => {
+    if (!query) throw new Error("Invalid weather query")
     try {
       const weather_res = await fetch(
         `https://api.weatherstack.com/current?access_key=${
           process.env.NEXT_PUBLIC_WEATHER_API_KEY ?? ""
-        }&query=${location_coord}&units=m`,
+        }&query=${query}&units=m`,
         {
           method: "GET",
         }
@@ -160,6 +160,51 @@ export class APIService {
       console.error(error)
     }
     return {} as User
+  }
+
+  getCitiesByState = async (
+    country: string,
+    state: string
+  ): Promise<string[]> => {
+    if (!state) throw new Error("Invalid state code")
+    try {
+      const res = await fetch(
+        `https://countriesnow.space/api/v0.1/countries/state/cities`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ country, state }),
+        }
+      ).then((res) => res.json())
+      return res.data
+    } catch (error) {
+      console.error(error)
+    }
+    return []
+  }
+
+  getStatesByCountry = async (
+    country: string
+  ): Promise<{ name: string; state_code: string }[]> => {
+    if (!country) throw new Error("Invalid country code")
+    try {
+      const res = await fetch(
+        `https://countriesnow.space/api/v0.1/countries/states`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ country }),
+        }
+      ).then((res) => res.json())
+      return res.data.states
+    } catch (error) {
+      console.error(error)
+    }
+    return []
   }
 }
 

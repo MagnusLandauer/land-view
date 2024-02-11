@@ -11,10 +11,11 @@ interface Props {
 const LandOutput = async ({ params }: Props) => {
   const { query_params } = params
   const session = await getServerSession(authOptions)
+  const isLoggedIn = session ? true : false
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      {session && <Actions queryString={query_params} />}
+      <Actions isLoggedIn={isLoggedIn} queryString={query_params} />
       <Output queryString={query_params} />
     </div>
   )

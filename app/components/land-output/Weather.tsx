@@ -1,25 +1,16 @@
-import APIService from "@/lib/APIService"
-import { CountryData } from "@/lib/entities"
+import { WeatherData } from "@/lib/entities"
 import { Chip, Skeleton } from "@nextui-org/react"
-import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 import { FaTemperatureEmpty } from "react-icons/fa6"
-import { TbTemperatureCelsius } from "react-icons/tb"
+import { TbTemperatureCelsius, TbTemperatureFahrenheit } from "react-icons/tb"
 
 interface WeatherProps {
-  coordinates: CountryData["capitalInfo"]["latlng"]
+  weatherData: WeatherData | undefined
+  isLoading: boolean
+  isError: boolean
 }
 
-const Weather = ({ coordinates }: WeatherProps) => {
-  const {
-    data: weatherData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["weather", coordinates],
-    queryFn: () => APIService.getLandWeather(coordinates.join(",")),
-  })
-
+const Weather = ({ weatherData, isError, isLoading }: WeatherProps) => {
   if (isLoading) {
     return (
       <>
@@ -70,6 +61,7 @@ const Weather = ({ coordinates }: WeatherProps) => {
             <p>{temperature}</p>
           </Chip>
         </div>
+        S
       </div>
       <p className="mt-4">Feels like {feelslike}°c</p>
     </div>

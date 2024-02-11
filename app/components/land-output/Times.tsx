@@ -1,4 +1,4 @@
-import { CountryData } from "@/lib/entities"
+import { CountryData, WeatherData } from "@/lib/entities"
 import React, { useState, useEffect } from "react"
 import moment from "moment"
 import { useQuery } from "@tanstack/react-query"
@@ -6,21 +6,14 @@ import APIService from "@/lib/APIService"
 import { Chip, Skeleton } from "@nextui-org/react"
 import { AiFillClockCircle } from "react-icons/ai"
 
-interface Props {
-  coordinates: CountryData["capitalInfo"]["latlng"]
-  city_name: string
+interface TimeProps {
+  weatherData: WeatherData | undefined
+  isLoading: boolean
+  isError: boolean
+  cityName: string
 }
 
-const Times = ({ coordinates, city_name }: Props) => {
-  const {
-    data: weatherData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["weather", coordinates],
-    queryFn: () => APIService.getLandWeather(coordinates.join(",")),
-  })
-
+const Times = ({ weatherData, isError, isLoading, cityName }: TimeProps) => {
   if (isLoading) {
     return (
       <div className="space-y-3">
@@ -42,7 +35,7 @@ const Times = ({ coordinates, city_name }: Props) => {
   const time = moment(localtime).format("HH:mm DD/MM/YYYY")
   return (
     <div className="flex flex-col gap-6">
-      <h3 className="text-xl">Time in {city_name}:</h3>
+      <h3 className="text-xl">Time in {cityName}:</h3>
       <Chip
         startContent={<AiFillClockCircle />}
         variant="faded"

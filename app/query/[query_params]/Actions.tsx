@@ -1,11 +1,20 @@
 "use client"
-import { Button, Skeleton, Spinner, Tooltip } from "@nextui-org/react"
+import { Button, Skeleton, Spinner, Switch, Tooltip } from "@nextui-org/react"
 import React, { useCallback, useEffect, useState } from "react"
 import APIService from "@/lib/APIService"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { TbTemperatureCelsius, TbTemperatureFahrenheit } from "react-icons/tb"
 
-const Actions = ({ queryString }: { queryString: string }) => {
+const Actions = ({
+  isLoggedIn,
+  queryString,
+}: {
+  isLoggedIn: boolean
+  queryString: string
+}) => {
   const [showError, setShowError] = useState(false)
+  const queryClient = useQueryClient()
+  const hasLandData = queryClient.getQueryData(["query"]) !== undefined
 
   const {
     data: user,
@@ -14,6 +23,7 @@ const Actions = ({ queryString }: { queryString: string }) => {
   } = useQuery({
     queryKey: ["user"],
     queryFn: () => APIService.getUser(),
+    enabled: isLoggedIn,
   })
 
   const [isSaved, setIsSaved] = useState(false)
@@ -49,36 +59,52 @@ const Actions = ({ queryString }: { queryString: string }) => {
     mutate(queryString)
   }, [queryString])
 
-  if (isLoading)
-    return (
-      <div className="h-4 flex mb-8">
-        <Skeleton className="w-2/5 rounded-lg" />
-      </div>
-    )
-
   return (
     <div className="flex gap-4 mb-8">
-      <Tooltip
-        isOpen={showError}
-        placement="bottom-start"
-        showArrow
-        content={
-          <p className="text-danger p-3">
-            Something went wrong while saving your query
-          </p>
-        }
-      >
-        <Button
-          variant="ghost"
-          color="secondary"
-          onClick={handleSave}
-          isLoading={isPending}
-          isDisabled={isSaved}
-          spinner={<Spinner size="sm" color="secondary" />}
+      {isLoggedIn && isLoading ? (
+        <div className="h-4 flex mb-8">
+          <Skeleton className="w-1/5 rounded-lg" />
+        </div>
+      ) : isLoggedIn && user ? (
+        <Tooltip
+          isOpen={showError}
+          placement="bottom-start"
+          showArrow
+          content={
+            <p className="text-danger p-3">
+              Something went wrong while saving your query
+            </p>
+          }
         >
-          {isSaved ? "Saved" : "Save"}
-        </Button>
-      </Tooltip>
+          <Button
+            variant="ghost"
+            color="secondary"
+            onClick={handleSave}
+            isLoading={isPending}
+            isDisabled={isSaved}
+            spinner={<Spinner size="sm" color="secondary" />}
+          >
+            {isSaved ? "Saved" : "Save"}
+          </Button>
+        </Tooltip>
+      ) : null}
+
+      {hasLandData && false && (
+        <Switch
+          defaultSelected
+          size="lg"
+          color="primary"
+          thumbIcon={({ isSelected, className }) =>
+            isSelected ? (
+              <TbTemperatureCelsius className={className} />
+            ) : (
+              <TbTemperatureFahrenheit className={className} />
+            )
+          }
+        >
+          Tempurature unit
+        </Switch>
+      )}
     </div>
   )
 }

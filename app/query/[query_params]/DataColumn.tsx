@@ -1,10 +1,8 @@
 import { useState } from "react"
-import Times from "../../components/land-output/Times"
 import { CountryData } from "@/lib/entities"
-import Weather from "../../components/land-output/Weather"
 import News from "../../components/land-output/News"
 import { Card, Divider, Skeleton } from "@nextui-org/react"
-import Image from "next/image"
+import CityData from "@/app/components/land-output/CityData"
 
 interface Props {
   land: CountryData
@@ -65,11 +63,11 @@ const DataColumn = ({ land, isLoading }: Props) => {
         )}
       </Card>
 
+      <Card className="p-6 flex-col gap-8">
+        <CityData countryName={land_name} capital={land.capital[0]} />
+      </Card>
+
       <Card className="p-6 flex-col gap-8 grow">
-        <Times coordinates={land_coords} city_name={land.capital[0]} />
-        <Divider />
-        <Weather coordinates={land_coords} />
-        <Divider />
         <News land_name={land_name} land_code={land.cca2} />
       </Card>
     </div>
