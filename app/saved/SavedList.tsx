@@ -13,6 +13,8 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import React, { useCallback, useState } from "react"
 import { MdOutlineDeleteOutline } from "react-icons/md"
+import { Lands } from "@/lib/entities"
+import { IoSwapHorizontal } from "react-icons/io5"
 
 const SavedList = () => {
   const { push } = useRouter()
@@ -47,6 +49,15 @@ const SavedList = () => {
     [mutate]
   )
 
+  const getLandNames = (
+    locations: string
+  ): { land1: string; land2: string } => {
+    const locStrArr = locations.split("-")
+    const land1 = Lands[locStrArr[0] as keyof typeof Lands]
+    const land2 = Lands[locStrArr[1] as keyof typeof Lands]
+    return { land1, land2 }
+  }
+
   const { comparisons } = user || {}
   return (
     <Card className="p-2 max-w-md">
@@ -75,12 +86,20 @@ const SavedList = () => {
             </Button>
           </div>
         )}
-        <div className="flex flex-col gap-3" data-testid="queries-wrapper">
+        <div className="flex flex-col gap-5" data-testid="queries-wrapper">
           {comparisons?.map((comparison) => {
             const { id, locations } = comparison
+            const { land1, land2 } = getLandNames(locations)
             return (
-              <div key={id} className="flex justify-between">
-                <Link href={`/query/${locations}`}>{locations}</Link>
+              <div key={id} className="flex justify-between gap-3 items-center">
+                <Link
+                  href={`/query/${locations}`}
+                  className="flex gap-2 whitespace-nowrap"
+                >
+                  {land1}
+                  <IoSwapHorizontal className="w-4 h-4" />
+                  {land2}
+                </Link>
                 <div className="flex gap-4">
                   <Button
                     isIconOnly
