@@ -1,0 +1,19 @@
+{
+  "id": "testuser-id",
+  "name": "Test User",
+  "email": "test@demo.com",
+  "emailVerified": null,
+  "image": "https://avatars.githubusercontent.com/u/16706903?v=4",
+  "comparisons": [
+    {
+      "id": "item-id-1",
+      "locations": "USA-NOR",
+      "userId": "testuser-id"
+    },
+    {
+      "id": "item-id-2",
+      "locations": "NOR-SWE",
+      "userId": "testuser-id"
+    }
+  ]
+}

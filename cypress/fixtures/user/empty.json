@@ -1,0 +1,8 @@
+{
+  "id": "testuser-id",
+  "name": "Test User",
+  "email": "test@demo.com",
+  "emailVerified": null,
+  "image": "https://avatars.githubusercontent.com/u/16706903?v=4",
+  "comparisons": []
+}

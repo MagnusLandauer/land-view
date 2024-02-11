@@ -23,7 +23,12 @@ const SignInButton = () => {
       <div className="flex gap-4 items-center">
         <Popover backdrop="opaque" placement="bottom">
           <PopoverTrigger>
-            <Avatar color="secondary" isBordered src={avatar} />
+            <Avatar
+              color="secondary"
+              isBordered
+              src={avatar}
+              data-testid="avatar"
+            />
           </PopoverTrigger>
           <PopoverContent>
             <div className="p-2">

@@ -35,3 +35,52 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add(
+  "login",
+  (email: string, password: string, method: "GitHub" | "Google") => {
+    cy.session(
+      `login-${method}`,
+      () => {
+        cy.visit("/api/auth/signin")
+        cy.get("button").contains(method).click()
+        cy.origin(
+          "https://github.com",
+          {
+            args: {
+              email,
+              password,
+            },
+          },
+          ({ email, password }) => {
+            cy.get('input[name="login"]').type(email, {
+              log: false,
+            })
+            cy.get('input[name="password"]').type(password, {
+              log: false,
+            })
+            cy.get('input[type="submit"]').click()
+          }
+        )
+        cy.wait(2000)
+        cy.visit("/")
+      },
+      {
+        validate: () => {
+          cy.get('[data-testid="avatar"]').should("exist")
+        },
+        cacheAcrossSpecs: true,
+      }
+    )
+  }
+)
+
+declare namespace Cypress {
+  interface Chainable {
+    login(
+      email: string,
+      password: string,
+      method: "GitHub" | "Google"
+    ): Chainable<void>
+  }
+}

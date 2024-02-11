@@ -75,7 +75,7 @@ const SavedList = () => {
             </Button>
           </div>
         )}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3" data-testid="queries-wrapper">
           {comparisons?.map((comparison) => {
             const { id, locations } = comparison
             return (
