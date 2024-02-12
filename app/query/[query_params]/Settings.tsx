@@ -18,8 +18,15 @@ const Settings = () => {
     })
   }
 
+  const handleTimeFormatChange = (val: boolean) => {
+    setSettings({
+      ...settings,
+      time_format: val ? "24" : "12",
+    })
+  }
+
   return (
-    <div>
+    <div className="flex gap-5 items-center">
       <Switch
         defaultSelected
         size="lg"
@@ -33,7 +40,22 @@ const Settings = () => {
         }
         onValueChange={handleTempUnitChange}
       >
-        Tempurature unit
+        Temp. Unit
+      </Switch>
+      <Switch
+        defaultSelected
+        size="lg"
+        color="primary"
+        thumbIcon={({ isSelected, className }) =>
+          isSelected ? (
+            <span className={className}>24</span>
+          ) : (
+            <span className={className}>12</span>
+          )
+        }
+        onValueChange={handleTimeFormatChange}
+      >
+        Hour format
       </Switch>
     </div>
   )

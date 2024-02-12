@@ -73,7 +73,6 @@ const Weather = ({
             <p>{temperature}</p>
           </Chip>
         </div>
-        S
       </div>
       <p className="mt-4">
         Feels like {feelslike}°{tempUnit.toLocaleLowerCase()}

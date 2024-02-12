@@ -23,7 +23,7 @@ const Output = ({ queryString }: Props) => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["query"],
+    queryKey: ["query", queryString],
     queryFn: () => APIService.getLandData(query as LandFormData),
   })
 

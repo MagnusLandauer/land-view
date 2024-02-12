@@ -11,7 +11,6 @@ interface Props {
 
 const DataColumn = ({ land, isLoading }: Props) => {
   const land_name = land.name.common
-  const land_coords = land.capitalInfo.latlng
   const [loadingImg, setLoadingImg] = useState(true)
 
   return (
@@ -67,9 +66,9 @@ const DataColumn = ({ land, isLoading }: Props) => {
         <CityData countryName={land_name} capital={land.capital[0]} />
       </Card>
 
-      <Card className="p-6 flex-col gap-8 grow">
+      {/* <Card className="p-6 flex-col gap-8 grow">
         <News land_name={land_name} land_code={land.cca2} />
-      </Card>
+      </Card> */}
     </div>
   )
 }

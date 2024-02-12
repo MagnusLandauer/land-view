@@ -12,7 +12,7 @@ interface ProvidersProps {
 
 interface Settings {
   temp_unit: "C" | "F"
-  time_format: string
+  time_format: "12" | "24"
 }
 
 interface SettingsContextProps {

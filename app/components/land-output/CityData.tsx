@@ -101,6 +101,7 @@ const CityData = ({ capital, countryName }: CityDataProps) => {
         isLoading={isLoading}
         isError={isError}
         cityName={displayCity}
+        time_format={settings.time_format}
       />
       <Divider />
       <Weather

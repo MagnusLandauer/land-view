@@ -1,8 +1,5 @@
-import { CountryData, WeatherData } from "@/lib/entities"
-import React, { useState, useEffect } from "react"
+import { WeatherData } from "@/lib/entities"
 import moment from "moment"
-import { useQuery } from "@tanstack/react-query"
-import APIService from "@/lib/APIService"
 import { Chip, Skeleton } from "@nextui-org/react"
 import { AiFillClockCircle } from "react-icons/ai"
 
@@ -11,9 +8,16 @@ interface TimeProps {
   isLoading: boolean
   isError: boolean
   cityName: string
+  time_format: "12" | "24"
 }
 
-const Times = ({ weatherData, isError, isLoading, cityName }: TimeProps) => {
+const Times = ({
+  weatherData,
+  isError,
+  isLoading,
+  cityName,
+  time_format,
+}: TimeProps) => {
   if (isLoading) {
     return (
       <div className="space-y-3">
@@ -32,7 +36,10 @@ const Times = ({ weatherData, isError, isLoading, cityName }: TimeProps) => {
   }
 
   const { localtime } = weatherData?.location ?? {}
-  const time = moment(localtime).format("HH:mm DD/MM/YYYY")
+  const formatStr =
+    time_format === "12" ? "hh:mma DD/MM/YYYY" : "HH:mm DD/MM/YYYY"
+  const time = moment(localtime).format(formatStr)
+  console.log(time_format, time)
   return (
     <div className="flex flex-col gap-6">
       <h3 className="text-xl">Time in {cityName}:</h3>
