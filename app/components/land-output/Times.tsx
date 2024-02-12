@@ -39,7 +39,6 @@ const Times = ({
   const formatStr =
     time_format === "12" ? "hh:mma DD/MM/YYYY" : "HH:mm DD/MM/YYYY"
   const time = moment(localtime).format(formatStr)
-  console.log(time_format, time)
   return (
     <div className="flex flex-col gap-6">
       <h3 className="text-xl">Time in {cityName}:</h3>
